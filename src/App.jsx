@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
+import Card from './components/Card';
 
+const filmes = [
+  {
+    id: 1,
+    title: 'teste 1',
+    poster_path: '/xq4dYEB8nizSYOVVPGDNnGZpyt.jpg',
+    vote_average: 7.5,
+  },
+  {
+    id: 2,
+    title: 'teste 2',
+    poster_path: '/xq4dYEB8nizSYOVVPGDNnGZpyt.jpg',
+    vote_average: 7.8,
+  },
+  {
+    id: 3,
+    title: 'teste 3',
+    poster_path: '/xq4dYEB8nizSYOVVPGDNnGZpyt.jpg',
+    vote_average: 6.5,
+  },
+];
+
+const App = () => {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <NavBar />
 
-export default App
+      <main>
+        <div className="container">
+
+          <h2 className="title">Filmes Populares:</h2>
+
+          <div className="movies-container">
+            {filmes.map((filme) => (
+              <Card key={filme.id} filme={filme} />
+            ))}
+          </div>
+
+        </div>
+      </main>
+
+      <Footer />
+    </>
+  );
+};
+
+export default App;
