@@ -1,31 +1,42 @@
+import { useState, useEffect } from 'react';
+
 import './App.css';
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import Card from './components/Card';
 
-const filmes = [
-  {
-    id: 1,
-    title: 'teste 1',
-    poster_path: '/xq4dYEB8nizSYOVVPGDNnGZpyt.jpg',
-    vote_average: 7.5,
-  },
-  {
-    id: 2,
-    title: 'teste 2',
-    poster_path: '/xq4dYEB8nizSYOVVPGDNnGZpyt.jpg',
-    vote_average: 7.8,
-  },
-  {
-    id: 3,
-    title: 'teste 3',
-    poster_path: '/xq4dYEB8nizSYOVVPGDNnGZpyt.jpg',
-    vote_average: 6.5,
-  },
-];
+const options = {
+  method: 'GET',
+  headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTIyMGU5MWJhNjlhOTNjYmY1YmQ1N2MyMDYxZjljMCIsIm5iZiI6MTcyMzE0MDE2OC4yMzY3ODEsInN1YiI6IjY2YWJlZDUzMWI2ZTIyNmMxMGExMzcyYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nfIwiYY0em29_GsRaaEPA03jb765B0R0u_lNmNBEwGw'
+  }
+};
+
+const URL_FETCH = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=pt-BR&page=1&sort_by=popularity.desc";
 
 const App = () => {
+
+  const [filmes, setFilmes] = useState([]);
+
+  useEffect(() => {
+    const buscarFilmes = async () => {
+
+      try {
+        
+        const dados = await fetch(URL_FETCH, options).then((resposta) => resposta.json());
+        setFilmes(dados.results);
+        
+      } catch (error) {
+        console.log("Erro ao buscar filmes: ", error);
+      }
+
+    };
+
+    buscarFilmes();
+  }, []);
+
   return (
     <>
       <NavBar />
